@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tadeo Alerta - Botón SOS</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <main class="app">
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="badge">SOS</div>
+        <div>
+          <strong>Botón de Ayuda</strong><br>
+          <small>Presiona el botón para solicitar soporte inmediato</small>
+        </div>
+      </div>
+
+      <div class="chip">
+        <span class="dot"></span>
+        WhatsApp listo
+      </div>
+    </header>
+
+    <section class="card">
+
+      <h2>¿Estás en una emergencia?</h2>
+
+      <div class="intro-text">
+        <p><strong>TADEO ALERTA</strong> está para ayudarte</p>
+        <p>Mantén la calma. Presiona el botón <b>SOS</b> para acceder a tu ubicación.</p>
+      </div>
+
+      <div class="ring">
+        <button id="sosButton" class="sos-btn">
+          <div class="btn-stack">
+            <div class="sos-text">SOS</div>
+            <div class="tadeo-text">TADEO ALERTA</div>
+          </div>
+        </button>
+      </div>
+
+      <div id="status" class="status">Listo para enviar alerta.</div>
+
+      <div class="bottom-actions">
+
+        <div class="action-card">
+          <div class="action-icon">📍</div>
+          <div class="action-text">
+            <b>Ubicación</b>
+            <span>Se adjunta un mensaje con tu ubicación (si el navegador lo permite).</span>
+          </div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-icon">📞</div>
+          <div class="action-text">
+            <b>Contacto</b>
+            <span>Envía esta alerta hasta 3 contactos frecuentes del mar.</span>
+          </div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-icon">🛡️</div>
+          <div class="action-text">
+            <b>Privacidad</b>
+            <span>No se guarda información en el servidor. Todo ocurre en tu dispositivo.</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="note">
+        <b>Importante:</b> Geolocalización funciona mejor en HTTPS.
+      </div>
+
+    </section>
+  </main>
+
+  <script src="index.js"></script>
+</body>
+</html>

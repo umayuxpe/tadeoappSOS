@@ -1,0 +1,66 @@
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#eef3fb;
+}
+
+.app{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  background:#fff;
+  padding:10px 16px;
+  border-radius:12px;
+}
+
+.badge{
+  background:#e53935;
+  color:white;
+  padding:6px 10px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+.ring{
+  display:flex;
+  justify-content:center;
+  margin:40px 0;
+}
+
+.sos-btn{
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  border:none;
+  background:#ff3b3b;
+  color:white;
+  font-size:28px;
+  cursor:pointer;
+}
+
+.status{
+  margin-top:10px;
+}
+
+.bottom-actions{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+}
+
+.action-card{
+  flex:1;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+}
+
+.note{
+  margin-top:15px;
+  font-size:12px;
+}
