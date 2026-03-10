@@ -1,6 +1,6 @@
 <script>
 
-const DESTINATION="+51940900238";
+const DESTINATION="+51999134777";
 const PHONE=DESTINATION.replace(/\D/g,"");
 
 const sosButton=document.getElementById("sosButton");
