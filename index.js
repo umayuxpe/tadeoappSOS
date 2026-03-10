@@ -1,58 +1,107 @@
-const WHATSAPP_NUMBER = "51940900238";
+<script>
 
-const statusEl = document.getElementById("status");
-const sosButton = document.getElementById("sosButton");
+const DESTINATION="+51940900238";
+const PHONE=DESTINATION.replace(/\D/g,"");
 
-function openWhatsApp(message){
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  window.location.assign(url);
+const sosButton=document.getElementById("sosButton");
+const statusEl=document.getElementById("status");
+const preview=document.getElementById("preview");
+const sendPanel=document.getElementById("sendPanel");
+
+let lastMessage="";
+
+function getCurrentDateTime(){
+return new Date().toLocaleString("es-PE");
 }
 
-function getGeoPosition(){
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) return reject();
-    navigator.geolocation.getCurrentPosition(resolve, reject, {
-      enableHighAccuracy: true,
-      timeout: 12000,
-      maximumAge: 0
-    });
-  });
+function buildAlertMessage(lat,lng,accuracy){
+
+const link=`https://www.google.com/maps?q=${lat},${lng}`;
+const precision=Math.round(accuracy||0);
+const timestamp=getCurrentDateTime();
+
+return `🌊 TADEO ALERTA - SOS 🛟
+
+Necesito ayuda urgente.
+
+📍 Ubicación:
+${link}
+
+🧭 Coordenadas: ${lat.toFixed(6)}, ${lng.toFixed(6)}
+🎯 Precisión GPS: ${precision} m
+🕒 Fecha y hora: ${timestamp}`;
 }
 
-sosButton.addEventListener("click", async () => {
+function buildFallbackMessage(){
+return `🌊 TADEO ALERTA - SOS 🛟
 
-  statusEl.textContent = "Obteniendo ubicación...";
+Necesito ayuda urgente.
 
-  try{
+🕒 Fecha y hora: ${getCurrentDateTime()}
+No se pudo obtener la ubicación GPS.`;
+}
 
-    const pos = await getGeoPosition();
+function getLocation(){
+return new Promise((resolve,reject)=>{
 
-    const { latitude, longitude, accuracy } = pos.coords;
+if(!navigator.geolocation){
+reject();
+return;
+}
 
-    const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
-
-    const precision = Math.round(accuracy);
-
-    const message =
-      `🌊 TADEO ALERTA - SOS 🛟
-
-Necesito ayuda. Me encuentro en esta ubicación:
-${mapsLink}
-
-Precisión aprox.: ${precision} m`;
-
-    statusEl.textContent = "Abriendo WhatsApp...";
-
-    openWhatsApp(message);
-
-  }catch{
-
-    statusEl.textContent = "No se pudo obtener ubicación. Enviando sin GPS...";
-
-    openWhatsApp(`🌊 TADEO ALERTA - SOS 🛟
-
-Necesito ayuda.`);
-
-  }
+navigator.geolocation.getCurrentPosition(resolve,reject,{
+enableHighAccuracy:true,
+timeout:10000
+});
 
 });
+}
+
+function openWhatsApp(message){
+const url=`https://api.whatsapp.com/send?phone=${PHONE}&text=${encodeURIComponent(message)}`;
+window.location.href=url;
+}
+
+function openSMS(message){
+const url=`sms:${PHONE}?body=${encodeURIComponent(message)}`;
+window.location.href=url;
+}
+
+sosButton.addEventListener("click",async()=>{
+
+statusEl.textContent="Obteniendo ubicación...";
+
+try{
+
+const pos=await getLocation();
+
+const lat=pos.coords.latitude;
+const lng=pos.coords.longitude;
+const acc=pos.coords.accuracy;
+
+lastMessage=buildAlertMessage(lat,lng,acc);
+
+}
+catch{
+
+lastMessage=buildFallbackMessage();
+
+}
+
+preview.textContent=lastMessage;
+preview.classList.add("active");
+sendPanel.classList.add("active");
+
+statusEl.textContent="Alerta preparada. Elige cómo enviarla.";
+
+});
+
+document.getElementById("sendWhatsAppBtn").onclick=()=>{
+openWhatsApp(lastMessage);
+};
+
+document.getElementById("sendSmsBtn").onclick=()=>{
+openSMS(lastMessage);
+};
+
+</script>

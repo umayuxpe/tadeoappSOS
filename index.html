@@ -1,85 +1,402 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tadeo Alerta - Botón SOS</title>
-  <link rel="stylesheet" href="index.css">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Tadeo Alerta - Botón SOS</title>
+
+<style>
+
+:root{
+--text:#0f1f3a;
+--muted:#5a6a85;
+--danger:#e53935;
+--danger2:#ff5252;
+--wa:#25d366;
+--sms:#2563eb;
+--card:#ffffff;
+--shadow:0 18px 45px rgba(16,38,90,.14);
+--radius:18px;
+}
+
+*{box-sizing:border-box;}
+
+body{
+margin:0;
+font-family:system-ui;
+background:
+radial-gradient(circle at 25% 20%,rgba(255,255,255,0.15),transparent 40%),
+linear-gradient(120deg,#0b1c3d,#273b8f,#2e6c8e,#49a7a2);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:24px;
+color:var(--text);
+}
+
+.app{
+width:min(980px,100%);
+display:grid;
+gap:18px;
+}
+
+.topbar{
+display:flex;
+align-items:center;
+justify-content:space-between;
+background:#fff;
+padding:14px 16px;
+border-radius:var(--radius);
+}
+
+.badge{
+width:38px;height:38px;
+border-radius:12px;
+background:linear-gradient(135deg,var(--danger),var(--danger2));
+display:grid;
+place-items:center;
+color:#fff;
+font-weight:900;
+}
+
+.card{
+background:#ffffffee;
+border-radius:var(--radius);
+padding:24px;
+box-shadow:var(--shadow);
+}
+
+.ring{
+width:320px;
+height:320px;
+border-radius:50%;
+display:grid;
+place-items:center;
+margin:auto;
+background:radial-gradient(circle,
+rgba(229,57,53,.25) 0%,
+rgba(229,57,53,.15) 40%,
+transparent 70%);
+}
+
+.sos-btn{
+
+width:200px;
+height:200px;
+border-radius:50%;
+border:none;
+cursor:pointer;
+
+background:radial-gradient(circle,#ff6b6b,#ef4444);
+
+color:white;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+box-shadow:0 20px 55px rgba(229,57,53,.35);
+
+}
+
+.sos-text{
+font-size:48px;
+font-weight:900;
+letter-spacing:2px;
+}
+
+.tadeo-text{
+font-size:14px;
+font-weight:700;
+letter-spacing:2px;
+margin-top:6px;
+}
+
+.status{
+margin-top:20px;
+padding:10px;
+background:#fff;
+border-radius:12px;
+font-size:13px;
+}
+
+.send-panel{
+margin-top:18px;
+display:none;
+gap:10px;
+grid-template-columns:1fr 1fr;
+}
+
+.send-panel.active{display:grid;}
+
+.send-btn{
+border:none;
+border-radius:14px;
+padding:14px;
+font-weight:700;
+color:#fff;
+cursor:pointer;
+}
+
+.wa-btn{background:var(--wa);}
+.sms-btn{background:var(--sms);}
+
+.preview{
+margin-top:14px;
+background:#fff;
+padding:14px;
+border-radius:14px;
+font-size:12px;
+white-space:pre-wrap;
+display:none;
+}
+
+.preview.active{display:block;}
+
+/* tarjetas inferiores */
+
+.bottom{
+margin-top:20px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px;
+}
+
+.info-card{
+background:#fff;
+padding:14px;
+border-radius:14px;
+display:flex;
+gap:10px;
+align-items:flex-start;
+}
+
+.icon{
+width:38px;
+height:38px;
+border-radius:10px;
+background:#f1f5f9;
+display:grid;
+place-items:center;
+}
+
+.info-card b{
+font-size:13px;
+}
+
+.info-card span{
+font-size:12px;
+color:var(--muted);
+}
+
+.note{
+font-size:12px;
+color:var(--muted);
+margin-top:8px;
+}
+
+@media(max-width:780px){
+
+.bottom{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
 </head>
 
 <body>
-  <main class="app">
 
-    <header class="topbar">
-      <div class="brand">
-        <div class="badge">SOS</div>
-        <div>
-          <strong>Botón de Ayuda</strong><br>
-          <small>Presiona el botón para solicitar soporte inmediato</small>
-        </div>
-      </div>
+<main class="app">
 
-      <div class="chip">
-        <span class="dot"></span>
-        WhatsApp listo
-      </div>
-    </header>
+<header class="topbar">
+<div style="display:flex;align-items:center;gap:10px">
+<div class="badge">SOS</div>
+<div>
+<strong>Botón de Ayuda</strong><br>
+<small>Presiona SOS para solicitar soporte</small>
+</div>
+</div>
+</header>
 
-    <section class="card">
+<section class="card">
 
-      <h2>¿Estás en una emergencia?</h2>
+<h2>¿Estás en una emergencia?</h2>
 
-      <div class="intro-text">
-        <p><strong>TADEO ALERTA</strong> está para ayudarte</p>
-        <p>Mantén la calma. Presiona el botón <b>SOS</b> para acceder a tu ubicación.</p>
-      </div>
+<div class="ring">
 
-      <div class="ring">
-        <button id="sosButton" class="sos-btn">
-          <div class="btn-stack">
-            <div class="sos-text">SOS</div>
-            <div class="tadeo-text">TADEO ALERTA</div>
-          </div>
-        </button>
-      </div>
+<button id="sosButton" class="sos-btn">
 
-      <div id="status" class="status">Listo para enviar alerta.</div>
+<div class="sos-text">SOS</div>
+<div class="tadeo-text">TADEO ALERTA</div>
 
-      <div class="bottom-actions">
+</button>
 
-        <div class="action-card">
-          <div class="action-icon">📍</div>
-          <div class="action-text">
-            <b>Ubicación</b>
-            <span>Se adjunta un mensaje con tu ubicación (si el navegador lo permite).</span>
-          </div>
-        </div>
+</div>
 
-        <div class="action-card">
-          <div class="action-icon">📞</div>
-          <div class="action-text">
-            <b>Contacto</b>
-            <span>Envía esta alerta hasta 3 contactos frecuentes del mar.</span>
-          </div>
-        </div>
+<div id="status" class="status">
+Listo para preparar alerta.
+</div>
 
-        <div class="action-card">
-          <div class="action-icon">🛡️</div>
-          <div class="action-text">
-            <b>Privacidad</b>
-            <span>No se guarda información en el servidor. Todo ocurre en tu dispositivo.</span>
-          </div>
-        </div>
+<div id="sendPanel" class="send-panel">
+<button id="sendWhatsAppBtn" class="send-btn wa-btn">
+Enviar por WhatsApp
+</button>
 
-      </div>
+<button id="sendSmsBtn" class="send-btn sms-btn">
+Enviar por SMS
+</button>
+</div>
 
-      <div class="note">
-        <b>Importante:</b> Geolocalización funciona mejor en HTTPS.
-      </div>
+<div id="preview" class="preview"></div>
 
-    </section>
-  </main>
+<!-- tarjetas inferiores -->
 
-  <script src="index.js"></script>
+<div class="bottom">
+
+<div class="info-card">
+<div class="icon">📍</div>
+<div>
+<b>Ubicación</b>
+<span>Se adjunta tu ubicación si el navegador lo permite.</span>
+</div>
+</div>
+
+<div class="info-card">
+<div class="icon">📞</div>
+<div>
+<b>Contacto</b>
+<span>Envía esta alerta hasta 3 contactos frecuentes.</span>
+</div>
+</div>
+
+<div class="info-card">
+<div class="icon">🛡️</div>
+<div>
+<b>Privacidad</b>
+<span>No se guarda información en servidores.</span>
+</div>
+</div>
+
+</div>
+
+<div class="note">
+<b>Importante:</b> Geolocalización funciona mejor en HTTPS.
+</div>
+
+</section>
+</main>
+
+<script>
+
+const DESTINATION="+51940900238";
+const PHONE=DESTINATION.replace(/\D/g,"");
+
+const sosButton=document.getElementById("sosButton");
+const statusEl=document.getElementById("status");
+const preview=document.getElementById("preview");
+const sendPanel=document.getElementById("sendPanel");
+
+let lastMessage="";
+
+function getCurrentDateTime(){
+return new Date().toLocaleString("es-PE");
+}
+
+function buildAlertMessage(lat,lng,accuracy){
+
+const link=`https://www.google.com/maps?q=${lat},${lng}`;
+const precision=Math.round(accuracy||0);
+const timestamp=getCurrentDateTime();
+
+return `🌊 TADEO ALERTA - SOS 🛟
+
+Necesito ayuda urgente.
+
+📍 Ubicación:
+${link}
+
+🧭 Coordenadas: ${lat.toFixed(6)}, ${lng.toFixed(6)}
+🎯 Precisión GPS: ${precision} m
+🕒 Fecha y hora: ${timestamp}`;
+}
+
+function buildFallbackMessage(){
+return `🌊 TADEO ALERTA - SOS 🛟
+
+Necesito ayuda urgente.
+
+🕒 Fecha y hora: ${getCurrentDateTime()}
+No se pudo obtener la ubicación GPS.`;
+}
+
+function getLocation(){
+return new Promise((resolve,reject)=>{
+
+if(!navigator.geolocation){
+reject();
+return;
+}
+
+navigator.geolocation.getCurrentPosition(resolve,reject,{
+enableHighAccuracy:true,
+timeout:10000
+});
+
+});
+}
+
+function openWhatsApp(message){
+const url=`https://api.whatsapp.com/send?phone=${PHONE}&text=${encodeURIComponent(message)}`;
+window.location.href=url;
+}
+
+function openSMS(message){
+const url=`sms:${PHONE}?body=${encodeURIComponent(message)}`;
+window.location.href=url;
+}
+
+sosButton.addEventListener("click",async()=>{
+
+statusEl.textContent="Obteniendo ubicación...";
+
+try{
+
+const pos=await getLocation();
+
+const lat=pos.coords.latitude;
+const lng=pos.coords.longitude;
+const acc=pos.coords.accuracy;
+
+lastMessage=buildAlertMessage(lat,lng,acc);
+
+}
+catch{
+
+lastMessage=buildFallbackMessage();
+
+}
+
+preview.textContent=lastMessage;
+preview.classList.add("active");
+sendPanel.classList.add("active");
+
+statusEl.textContent="Alerta preparada. Elige cómo enviarla.";
+
+});
+
+document.getElementById("sendWhatsAppBtn").onclick=()=>{
+openWhatsApp(lastMessage);
+};
+
+document.getElementById("sendSmsBtn").onclick=()=>{
+openSMS(lastMessage);
+};
+
+</script>
+
 </body>
 </html>
